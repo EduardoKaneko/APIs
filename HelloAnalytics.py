@@ -48,7 +48,7 @@ def get_report(analytics):
 
 def print_response(response):
   """Parses and prints the Analytics Reporting API V4 response.
-
+cd 
   Args:
     response: An Analytics Reporting API V4 response.
   """
