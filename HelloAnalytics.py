@@ -2,6 +2,7 @@
 
 from apiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
+import pandas as pd
 
 
 SCOPES = ['https://www.googleapis.com/auth/analytics.readonly']
@@ -67,12 +68,17 @@ def print_response(response):
         print('Date range: ' + str(i)) 
         for metricHeader, value in zip(metricHeaders, values.get('values')):
           print(metricHeader.get('name') + ': ' + value)
-
+          
 
 def main():
   analytics = initialize_analyticsreporting()
   response = get_report(analytics)
   print_response(response)
+  df = pd.DataFrame.from_dict(response)
+  df.to_csv('analytics.csv')
+  
+  
+
 
 if __name__ == '__main__':
   main()
