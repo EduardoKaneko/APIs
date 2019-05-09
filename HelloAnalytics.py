@@ -38,9 +38,9 @@ def get_report(analytics):
         'reportRequests': [
         {
           'viewId': VIEW_ID,
-          'dateRanges': [{'startDate': '30daysAgo', 'endDate': 'today'}],
+          'dateRanges': [{'startDate': '2019-05-01', 'endDate': 'yesterday'}],
           'metrics': [{'expression': 'ga:sessions'}, {'expression': 'ga:newUsers'}, {'expression': 'ga:users'}],
-          'dimensions': [{'name': 'ga:source'}]
+          'dimensions': [{'name': 'ga:source'}, {'name': 'ga:sourceMedium'}]
         }]
       }
   ).execute()
