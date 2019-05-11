@@ -60,7 +60,7 @@ def get_report(analytics):
       }
   ).execute()
 
-def write_results(report):
+# def write_results(report):
 
 
 def print_response(response):
@@ -79,7 +79,7 @@ cd
       dimensions = row.get('dimensions', [])
       dateRangeValues = row.get('metrics', [])
 
-      dimension[0] = datetime.strptime(str(dimensions[0], '%Y%m%d').strftime("%Y-%m-%d")))
+      dimension[0] = datetime.strptime(str(dimensions[0], '%Y%m%d').strftime("%Y-%m-%d"))
       insert_query= "insert into " + table + " VALUES ("+ value_string(col) + ")"
 
       for header, dimension in zip(dimensionHeaders, dimensions):
