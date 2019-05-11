@@ -6,7 +6,7 @@ import psycopg2
 # This returns a PostgreSQL Connection Object.
 try:
     connection = psycopg2.connect(  
-        database = "testbb",
+        database = "ga",
         user="postgres",
         password="eck",
         host="localhost",
@@ -18,9 +18,11 @@ try:
     print(connection.get_dsn_parameters(), "\n")
     
     # Print postgres version
-    cursor.execute("SELECT version();")
-    record = cursor.fetchone()
-    print("You are connected to - ", record, "\n")
+    cursor.execute("""CREATE TABLE Traffic(Id INTEGER PRIMARY KEY, Name VARCHAR(20), Price INT)""")
+#    record = cursor.fetchone()
+    connection.commit()
+
+#    print("You are connected to - ", record, "\n")
 
 except(Exception, psycopg2.Error) as error:
     print("Error while connecting to PostgreSQL", error)

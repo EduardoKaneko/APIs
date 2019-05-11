@@ -1,0 +1,10 @@
+# config file for dfareporting programs.
+
+postgres:
+  host: local_host
+  port: 5432
+  database: database_name
+  username: postgres
+  password: eck
+  insert_table: schema.table_name
+  col_num: 00 # select count(*) from information_schema.columns where table_name='schema.table_name' and table_schema = 'schema';
