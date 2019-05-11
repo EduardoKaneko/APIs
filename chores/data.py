@@ -47,4 +47,4 @@ fdb_db_config = [
     'dsn': "/your/path/to/source.db",
     'user': "your_username",
     'password': "your_password",
-  }
+  }]
