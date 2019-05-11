@@ -2,13 +2,15 @@ from apiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
 from pandas.io.json import json_normalize
+from sqalchemy import create_engine
+
 
 # Auth and connect with ga api
 
 SCOPES = ['https://www.googleapis.com/auth/analytics.readonly']
 KEY_FILE_LOCATION = 'client_secrets.json'
 VIEW_ID = '109580013'
-
+engine = create_engine()
 
 def initialize_analyticsreporting():
   """Initializes an Analytics Reporting API V4 service object.
@@ -62,6 +64,7 @@ def main():
     response = get_report(analytics)
 #    parse_data(response)
     print(parse_data(response))
+    response.to_sql('ga', engine)
 
 
 if __name__ == '__main__':
