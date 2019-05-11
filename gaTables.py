@@ -2,7 +2,7 @@ from apiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
 from pandas.io.json import json_normalize
-from sqalchemy import create_engine
+from sqlachemy import create_engine
 
 
 # Auth and connect with ga api
