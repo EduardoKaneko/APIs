@@ -10,7 +10,7 @@ from sqalchemy import create_engine
 SCOPES = ['https://www.googleapis.com/auth/analytics.readonly']
 KEY_FILE_LOCATION = 'client_secrets.json'
 VIEW_ID = '109580013'
-engine = create_engine()
+engine = create_engine('postgresql://postgres:eck@localhost:5432/ga')
 
 def initialize_analyticsreporting():
   """Initializes an Analytics Reporting API V4 service object.
@@ -62,8 +62,7 @@ def parse_data(response):
 def main():
     analytics = initialize_analyticsreporting()
     response = get_report(analytics)
-#    parse_data(response)
-    print(parse_data(response))
+    response = parse_data(response)
     response.to_sql('ga', engine)
 
 
