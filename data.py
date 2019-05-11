@@ -6,7 +6,7 @@ datawarehouse_db_config = {
   'Trusted_Connection': 'yes',
   'driver': '{SQL Server}',
   'server': 'datawarehouse_sql_server',
-  'database': '{}'.format(datawarehouse_name)
+  'database': '{}'.format(datawarehouse_name),
   'user': 'your_db_username',
   'password': 'your_db_password',
   'autocommit': True,
@@ -18,7 +18,7 @@ sqlserver_db_config = [
     'Trusted_Connection': 'yes',
     'driver': '{SQL Server}',
     'server': 'your_sql_server',
-    'database': 'db1'
+    'database': 'db1',
     'user': 'your_db_username',
     'password': 'your_db_password',
     'autocommit': True,
