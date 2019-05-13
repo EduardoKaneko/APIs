@@ -63,7 +63,7 @@ def main():
     analytics = initialize_analyticsreporting()
     response = get_report(analytics)
     response = parse_data(response)
-    response.to_sql('full_sessions', engine)
+#    response.to_sql('full_sessions', engine)
 
 
 if __name__ == '__main__':
