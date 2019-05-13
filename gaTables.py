@@ -32,7 +32,7 @@ def get_report(analytics):
             'reportRequests': [
             {
             'viewId': VIEW_ID,
-            'dateRanges': [{'startDate': '2019-05-01', 'endDate': 'yesterday'}],
+            'dateRanges': [{'startDate': '2015-05-01', 'endDate': 'yesterday'}],
             'metrics': [{'expression': 'ga:sessions'}, {'expression': 'ga:newUsers'}, {'expression': 'ga:users'}],
             'dimensions': [{'name': 'ga:source'}, {'name': 'ga:sourceMedium'}]
             }]
@@ -63,7 +63,7 @@ def main():
     analytics = initialize_analyticsreporting()
     response = get_report(analytics)
     response = parse_data(response)
-    response.to_sql('ga', engine)
+    response.to_sql('full_sessions', engine)
 
 
 if __name__ == '__main__':
