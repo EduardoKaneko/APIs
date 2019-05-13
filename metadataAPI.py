@@ -4,6 +4,7 @@ import pandas as pd
 from pandas.io.json import json_normalize
 from sqlalchemy import create_engine
 import urllib.request as urllib2
+from apiclient.discovery import build
 # from urllib2 import HTTPError
 
 
@@ -13,6 +14,9 @@ SCOPES = ['https://www.googleapis.com/auth/analytics.readonly']
 KEY_FILE_LOCATION = 'client_secrets.json'
 VIEW_ID = '109580013'
 engine = create_engine('postgresql://postgres:eck@localhost:5432/ga')
+
+import requests
+r = requests.get("https://www.googleapis.com/analytics/v3/metadata/ga/columns?key=AIzaSyAhQcvVYyfVaLuQdDyLck-ohewCxqAg5uo")
 
 def initialize_analyticsreporting():
   """Initializes an Analytics Reporting API V4 service object.
@@ -28,12 +32,14 @@ def initialize_analyticsreporting():
 
   return analytics
 
-# 1. Execute a Metadata Request
-# An application can request columns data by calling the list method on the Analytics service object.
-# The method requires an reportType parameter that specifies the column data to retrieve.
-# For example, the following code requests columns for the ga report type.
+API_KEY = 'AIzaSyAhQcvVYyfVaLuQdDyLck-ohewCxqAg5uo'
+
+service = build('analytics', 'v3', developerKey=API_KEY)
+
+  # Start coding cool things.
 try:
- results = service.metadata().columns().list(reportType='ga').execute()
+    results = service.metadata().columns().list(reportType='ga').execute()
+
 except TypeError as error:
  # Handle errors in constructing a query.
  print ('There was an error in constructing your query : %s' % error)
@@ -45,9 +51,11 @@ except urllib2.HTTPError as error:
 # The components of the result can be printed out as follows:
 def print_metadata_report(results):
     print('Metadata Response Report')
+    analytics = initialize_analyticsreporting()
     print_report_info(results)
     print_attributes(results.get('attributeNames'))
     print_columns(results)
+ 
 
 def print_report_info(columns):
     print("Metadata Report Info")
