@@ -49,7 +49,7 @@ def parse_data(response):
   columns = columnHeader
   for metric in metricHeader:
     columns.append(metric['name'])
-
+    
   data = json_normalize(reports['data']['rows'])
   data_dimensions = pd.DataFrame(data['dimensions'].tolist())
   data_metrics = pd.DataFrame(data['metrics'].tolist())
