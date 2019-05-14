@@ -10,7 +10,7 @@ from sqlalchemy import create_engine
 SCOPES = ['https://www.googleapis.com/auth/analytics.readonly']
 KEY_FILE_LOCATION = 'client_secrets.json'
 VIEW_ID = '109580013'
-engine = create_engine('postgresql://postgres:eck@localhost:5432/ga')
+engine = create_engine('postgresql://postgres:eck@localhost:5432/postgres')
 
 def initialize_analyticsreporting():
   """Initializes an Analytics Reporting API V4 service object.
@@ -32,10 +32,10 @@ def get_report(analytics):
             'reportRequests': [
             {
             'viewId': VIEW_ID,
+            'pageSize': 10000,
             'dateRanges': [{'startDate': '2015-05-01', 'endDate': 'yesterday'}],
             'metrics': [{'expression': 'ga:sessions'}, {'expression': 'ga:newUsers'}, {'expression': 'ga:users'}],
             'dimensions': [{'name': 'ga:source'}, {'name': 'ga:sourceMedium'}],
-            'max_results' : [{'1000'}]
             }]
             }
         ).execute()

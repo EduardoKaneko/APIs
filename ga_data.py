@@ -6,6 +6,9 @@ from oauth2client.service_account import ServiceAccountCredentials
 import requests
 import json
 
+# Libs para criar tabela 
+import psycopg2
+from pprint import pprint 
 # Definindo variaveis
 gaURL = "https://www.googleapis.com/analytics/v3/metadata/ga/columns?key=AIzaSyAhQcvVYyfVaLuQdDyLck-ohewCxqAg5uo"
 
