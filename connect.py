@@ -8,7 +8,7 @@ from astropy.table import Table, Column
 pg_ds_conn_id = 'datascience'
 SCHEMA = 'analytics_TESTE'
 tName = 'user_teste'
-tableFields = ['OneDayUsers', 'SevenDayUsers', 'TwoWeeksUsers', 'MonthlyUsers']
+
 
 def createTable(dest_conn,tName):
     dest_cursor = dest_conn.cursor()    
@@ -18,14 +18,10 @@ def createTable(dest_conn,tName):
     dest_cursor.execute(f'''
    CREATE TABLE IF NOT EXISTS {SCHEMA}.{tName}(
      userType     CHAR(40),
-     sessionCount CHAR(40),
-     daysSinceLastSession CHAR(40),
+     sessionCount INTERGER,
+     daysSinceLastSession INTEGER,
      users INTEGER,
-     newUsers INTEGER,
-     {tableFields[0]} INTEGER,
-     {tableFields[1]} INTEGER,
-     {tableFields[2]} INTEGER,
-     {tableFields[3]} INTEGER
+
      
     );
   ''')
@@ -38,3 +34,13 @@ def updateTable():
     
     createTable(dest_conn, tName)
     
+# SQL Table: 
+# Other metrics
+# tableFields = ['OneDayUsers', 'SevenDayUsers', 'TwoWeeksUsers', 'MonthlyUsers']
+'''
+     newUsers INTEGER,
+     {tableFields[0]} INTEGER,
+     {tableFields[1]} INTEGER,
+     {tableFields[2]} INTEGER,
+     {tableFields[3]} INTEGER
+'''

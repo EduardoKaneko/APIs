@@ -34,7 +34,7 @@ def get_report(analytics):
             'viewId': VIEW_ID,
             'pageSize': 10000,
             'dateRanges': [{'startDate': '2015-05-01', 'endDate': 'yesterday'}],
-            'metrics': [{'expression': 'ga:users'}, {'expression': 'ga:newUsers'}],
+            'metrics': [{'expression': 'ga:users'}],
             'dimensions': [{'name': 'ga:userType'}, {'name': 'ga:sessionCount'}, {'name': 'ga:daysSinceLastSession'}],
             }]
             }
