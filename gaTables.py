@@ -35,7 +35,7 @@ def get_report(analytics):
             'pageSize': 10000,
             'dateRanges': [{'startDate': '2015-05-01', 'endDate': 'yesterday'}],
             'metrics': [{'expression': 'ga:sessions'}, {'expression': 'ga:newUsers'}, {'expression': 'ga:users'}],
-            'dimensions': [{'name': 'ga:source'}, {'name': 'ga:sourceMedium'}],
+            'dimensions': [{'name': 'ga:userType'}, {'name': 'ga:sessionCount'}, {'name': 'ga:ga:daysSinceLastSession'}],
             }]
             }
         ).execute()
@@ -46,6 +46,8 @@ def parse_data(response):
   reports = response['reports'][0]
   columnHeader = reports['columnHeader']['dimensions']
   metricHeader = reports['columnHeader']['metricHeader']['metricHeaderEntries']
+  for column in reports['columnHeader']['dimensions']:
+        print(column)
 
   columns = columnHeader
   for metric in metricHeader:
@@ -65,7 +67,7 @@ def main():
     analytics = initialize_analyticsreporting()
     response = get_report(analytics)
     response = parse_data(response)
-    response.to_sql('test-v3', engine)
+    response.to_sql('test-v4', engine)
 
 
 if __name__ == '__main__':
