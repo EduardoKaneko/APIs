@@ -34,8 +34,8 @@ def get_report(analytics):
             'viewId': VIEW_ID,
             'pageSize': 10000,
             'dateRanges': [{'startDate': '2015-05-01', 'endDate': 'yesterday'}],
-            'metrics': [{'expression': 'ga:sessions'}, {'expression': 'ga:newUsers'}, {'expression': 'ga:users'}],
-            'dimensions': [{'name': 'ga:userType'}, {'name': 'ga:sessionCount'}, {'name': 'ga:ga:daysSinceLastSession'}],
+            'metrics': [{'expression': 'ga:users'}, {'expression': 'ga:newUsers'}],
+            'dimensions': [{'name': 'ga:userType'}, {'name': 'ga:sessionCount'}, {'name': 'ga:daysSinceLastSession'}],
             }]
             }
         ).execute()
@@ -46,12 +46,16 @@ def parse_data(response):
   reports = response['reports'][0]
   columnHeader = reports['columnHeader']['dimensions']
   metricHeader = reports['columnHeader']['metricHeader']['metricHeaderEntries']
+  columnsL =[]
   for column in reports['columnHeader']['dimensions']:
-        print(column)
+        columnsL.append(column)
 
+  for column in reports['columnHeader']['metricHeader']['metricHeaderEntries']:
+        columnsL.append(column['name'])
+        print(columnsL)
+        
   columns = columnHeader
   for metric in metricHeader:
-    print(metric['name'])
     columns.append(metric['name'])
     
   data = json_normalize(reports['data']['rows'])
@@ -67,7 +71,8 @@ def main():
     analytics = initialize_analyticsreporting()
     response = get_report(analytics)
     response = parse_data(response)
-    response.to_sql('test-v4', engine)
+    print(response)
+#    response.to_sql('test-v4', engine)
 
 
 if __name__ == '__main__':
