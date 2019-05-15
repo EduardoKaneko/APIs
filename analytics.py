@@ -22,23 +22,33 @@ tName = 'user_teste'
 dest_conn = PostgresHook(postgres_conn_id=pg_ds_conn_id).get_conn()
 
 
+
+pg_ds_conn_id = 'datascience'
+SCHEMA = 'analytics_tr'
+tName = 'user_teste1'
+
 def createTable(dest_conn,tName):
     dest_cursor = dest_conn.cursor()    
     dest_cursor.execute(f'CREATE SCHEMA IF NOT EXISTS {SCHEMA}')
-#    tableFields = 'id serial'
-    
     dest_cursor.execute(f'''
-   CREATE TABLE IF NOT EXISTS {SCHEMA}.{tName}(
-     userType     CHAR(40),
-     sessionCount INTERGER,
-     daysSinceLastSession INTEGER,
-     users INTEGER,
-
-     
+        CREATE TABLE IF NOT EXISTS {SCHEMA}.{tName}(
+        userType     CHAR(40),
+        sessionCount INTEGER,
+        daysSinceLastSession INTEGER,
+        users INTEGER 
     );
   ''')
     dest_conn.commit()
     dest_conn.close()
+
+
+
+def updateTable():
+    dest_conn = PostgresHook(postgres_conn_id=pg_ds_conn_id).get_conn()
+    createTable(dest_conn, tName)
+
+
+
 
 def initialize_analyticsreporting():
   """Initializes an Analytics Reporting API V4 service object.
@@ -88,6 +98,13 @@ def parse_data(response):
 
   return result
 
+def insertData(result):
+    dest_cursor = dest_conn.cursor()
+    for row in result:
+        dest_cursor.execute('''INSERT INTO {SCHEMA}.{tName} 
+                            VALUES(%s, %s, %s, %s)''', [row])
+        dest_cursor.commit()
+
 
 
 def updateTable():
@@ -95,12 +112,11 @@ def updateTable():
     createTable(dest_conn, tName)
 
 def main():
-#    updateTable()
+    updateTable()
     analytics = initialize_analyticsreporting()
     response = get_report(analytics)
     response = parse_data(response)
-    print(response)
-#    insertData(response)
+    insertData(response)
 #   print(response)
 #   response.to_sql('test-v4', engine)
 
