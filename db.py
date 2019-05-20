@@ -1,35 +1,32 @@
-# Import the psycopg2 module in our program. 
-# Using the classes and method defined psycopg2 module we can communicate with PostgreSQL.
 import psycopg2
 
-# Using the connect() method we can create a connection to a PostgreSQL database instance. 
-# This returns a PostgreSQL Connection Object.
-try:
-    connection = psycopg2.connect(  
-        database = "ga",
-        user="postgres",
-        password="eck",
-        host="localhost",
-        port="5432"
-    )
-
-    cursor = connection.cursor()
-    # Print PostgreSQL connection properties
-    print(connection.get_dsn_parameters(), "\n")
-    
-    # Print postgres version
-    cursor.execute("""CREATE TABLE Traffic(Id INTEGER PRIMARY KEY, Name VARCHAR(20), Price INT)""")
-#    record = cursor.fetchone()
-    connection.commit()
-
-#    print("You are connected to - ", record, "\n")
-
-except(Exception, psycopg2.Error) as error:
-    print("Error while connecting to PostgreSQL", error)
-
-finally:
-    # Closing database connection
-    if(connection):
-        cursor.close()
-        connection.close()
-        print("PostgreSQL connection is closed")
+def main():
+    database = "postgresql://postgres:eck@localhost:5432/postgres"
+ 
+    sql_create_projects_table = """ CREATE TABLE IF NOT EXISTS projects (
+                                        id integer PRIMARY KEY,
+                                        name text NOT NULL,
+                                        begin_date text,
+                                        end_date text
+                                    ); """
+ 
+    sql_create_tasks_table = """CREATE TABLE IF NOT EXISTS tasks (
+                                    id integer PRIMARY KEY,
+                                    name text NOT NULL,
+                                    priority integer,
+                                    status_id integer NOT NULL,
+                                    project_id integer NOT NULL,
+                                    begin_date text NOT NULL,
+                                    end_date text NOT NULL,
+                                    FOREIGN KEY (project_id) REFERENCES projects (id)
+                                );"""
+ 
+    # create a database connection
+    conn = create_connection(database = "postgres", user="postgres", password="eck", host="localhost", port="5432")
+    if conn is not None:
+        # create projects table
+        create_table(conn, sql_create_projects_table)
+        # create tasks table
+        create_table(conn, sql_create_tasks_table)
+    else:
+        print("Error! cannot create the database connection.")
